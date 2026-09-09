@@ -1,0 +1,7 @@
+[project]
+name = "contact-app"
+version = "0.1.0"
+description = "Contact app following along with Hypermedia Systems book"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
