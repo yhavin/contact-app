@@ -2,12 +2,14 @@
 
 {% block content %}
 
-  <form action="/contacts" method="get" class="tool-bar">
-    <label for="search">Search Term</label>
+  <div id="main">
+    <label for="search">Search Contacts:</label>
     <input id="search" type="search" name="q"
       value="{{ request.args.get('q') or '' }}"/>
-    <input type="submit" value="Search"/>
-  </form>
+    <button hx-post="/contacts" hx-target="#main" hx-include="#search" hx-push-url="true">
+      Search
+    </button>
+  </div>
 
   <table>
     <thead>
