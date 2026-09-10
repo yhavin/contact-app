@@ -12,3 +12,4 @@ wheels/
 # Other
 .DS_Store
 .env
+contacts.json
