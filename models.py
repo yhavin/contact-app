@@ -1,5 +1,7 @@
 import json
 
+PAGE_SIZE = 10
+
 
 class Contact:
     db = {}  # noqa: RUF012
@@ -44,8 +46,11 @@ class Contact:
         Contact.save_db()
 
     @classmethod
-    def all(cls):
-        return list(cls.db.values())
+    def all(cls, page=1):
+        page = int(page)
+        start = (page - 1) * PAGE_SIZE
+        end = start + PAGE_SIZE
+        return list(cls.db.values())[start:end]
 
     @classmethod
     def search(cls, text):
