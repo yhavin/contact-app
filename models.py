@@ -12,6 +12,12 @@ class Contact:
         self.email = email
         self.errors = {}
 
+    def update(self, first, last, phone, email):
+        self.first = first
+        self.last = last
+        self.phone = phone
+        self.email = email
+
     def validate(self):
         if not self.email:
             self.errors["email"] = "Email required"
@@ -62,3 +68,11 @@ class Contact:
         output_array = [contact.__dict__ for contact in Contact.db.values()]
         with open("contacts.json", "w") as f:
             json.dump(output_array, f, indent=2)
+    
+    @classmethod
+    def find(cls, id_):
+        id_ = int(id_)
+        c = cls.db.get(id_)
+        if c is not None:
+            c.errors = {}
+        return c
