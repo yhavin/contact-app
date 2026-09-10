@@ -2,7 +2,7 @@ import json
 
 
 class Contact:
-    db = {}
+    db = {}  # noqa: RUF012
 
     def __init__(self, id_=None, first=None, last=None, phone=None, email=None):
         self.id = id_
@@ -48,6 +48,14 @@ class Contact:
             if match_first or match_last or match_phone or match_email:
                 result.append(c)
         return result
+    
+    @classmethod
+    def load_db(cls):
+        with open("contacts.json", "r") as contacts_file:
+            contacts = json.load(contacts_file)
+            cls.db.clear()
+            for c in contacts:
+                cls.db[c["id"]] = Contact(c["id"], c["first"], c["last"], c["phone"], c["email"])
     
     @staticmethod
     def save_db():
