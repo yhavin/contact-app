@@ -1,3 +1,6 @@
+import json
+
+
 class Contact:
     db = {}
 
@@ -7,6 +10,28 @@ class Contact:
         self.last = last
         self.phone = phone
         self.email = email
+        self.errors = {}
+
+    def validate(self):
+        if not self.email:
+            self.errors["email"] = "Email required"
+        existing_contact = next(filter(lambda c: c.id != self.id and c.email == self.email, Contact.db.values()), None)
+        if existing_contact:
+            self.errors["email"] = "Email must be unique"
+        return len(self.errors) == 0
+    
+    def save(self):
+        if not self.validate():
+            return False
+        if self.id is None:
+            if len(Contact.db) == 0:
+                max_id = 1
+            else:
+                max_id = max(contact.id for contact in Contact.db.values())
+            self.id = max_id + 1
+            Contact.db[self.id] = self
+        Contact.save_db()
+        return True
 
     @classmethod
     def all(cls):
@@ -23,3 +48,9 @@ class Contact:
             if match_first or match_last or match_phone or match_email:
                 result.append(c)
         return result
+    
+    @staticmethod
+    def save_db():
+        output_array = [contact.__dict__ for contact in Contact.db.values()]
+        with open("contacts.json", "w") as f:
+            json.dump(output_array, f, indent=2)
