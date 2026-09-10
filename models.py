@@ -38,6 +38,10 @@ class Contact:
             Contact.db[self.id] = self
         Contact.save_db()
         return True
+    
+    def delete(self):
+        del Contact.db[self.id]
+        Contact.save_db()
 
     @classmethod
     def all(cls):
