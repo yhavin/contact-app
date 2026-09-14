@@ -1,5 +1,6 @@
 {% for contact in contacts %}
   <tr>
+    <td><input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}"></td>
     <td>{{ contact.first }}</td>
     <td>{{ contact.last }}</td>
     <td>{{ contact.phone }}</td>
@@ -17,13 +18,12 @@
 {% if contacts|length == 10 %}
   <tr>
     <td colspan="5" style="text-align: center">
-      <span hx-target="closest tr"
-        hx-trigger="revealed"
+      <button hx-target="closest tr"
         hx-swap="outerHTML"
         hx-select="tbody > tr"
         hx-get="/contacts?page={{ page + 1 }}">
-        Loading More...
-      </span>
+        Load more
+      </button>
     </td>
   </tr>
 {% endif %}
