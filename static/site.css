@@ -2,3 +2,12 @@
   display: inline-block;
   color: darkred;
 }
+
+main {
+  --line-length: 42rem;
+}
+
+tr.htmx-swapping {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
