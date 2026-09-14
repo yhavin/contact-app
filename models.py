@@ -1,4 +1,5 @@
 import json
+import time
 
 PAGE_SIZE = 10
 
@@ -85,3 +86,8 @@ class Contact:
         if c is not None:
             c.errors = {}
         return c
+    
+    @classmethod
+    def count(cls):
+        time.sleep(2)
+        return len(cls.db)
