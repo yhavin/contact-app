@@ -1,9 +1,9 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request
+from flask import Flask, flash, redirect, render_template, request, send_file
 
-from models import Contact
+from models import Archiver, Contact
 
 load_dotenv()
 
@@ -28,7 +28,7 @@ def contacts():
             return render_template("rows.html", contacts=contacts_set, page=page)
     else:
         contacts_set = Contact.all(page)
-    return render_template("index.html", contacts=contacts_set, page=page)
+    return render_template("index.html", contacts=contacts_set, page=page, archiver=Archiver.get())
 
 
 @app.route("/contacts/count")
@@ -114,3 +114,22 @@ def contacts_email_get(contact_id=0):
     c.email = request.args.get("email")
     c.validate()
     return c.errors.get("email") or ""
+
+
+@app.route("/contacts/archive", methods=["POST"])
+def start_archive():
+    archiver = Archiver.get()
+    archiver.run()
+    return render_template("archive_ui.html", archiver=archiver)
+
+
+@app.route("/contacts/archive", methods=["GET"])
+def archive_status():
+    archiver = Archiver.get()
+    return render_template("archive_ui.html", archiver=archiver)
+
+
+@app.route("/contacts/archive/file", methods=["GET"])
+def archive_content():
+    manager = Archiver.get()
+    return send_file(manager.archive_file(), download_name="archive.json", as_attachment=True)
