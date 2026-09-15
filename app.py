@@ -133,3 +133,10 @@ def archive_status():
 def archive_content():
     manager = Archiver.get()
     return send_file(manager.archive_file(), download_name="archive.json", as_attachment=True)
+
+
+@app.route("/contacts/archive", methods=["DELETE"])
+def reset_archive():
+    archiver = Archiver.get()
+    archiver.reset()
+    return render_template("archive_ui.html", archiver=archiver)
