@@ -5,7 +5,7 @@
     <div hx-get="/contacts/archive" hx-trigger="load delay:500ms">
       Creating archive...
       <div class="progress">
-        <div class="progress-bar"
+        <div id="archive-progress" class="progress-bar"
           role="progressbar"
           aria-valuenow="{{ archiver.progress() * 100 }}"
           style="width: {{ archiver.progress() * 100 }}%">
