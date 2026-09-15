@@ -105,7 +105,8 @@ def contacts_delete_all():
         contact.delete()
     flash("Deleted contacts")
     contacts_set = Contact.all()
-    return render_template("index.html", contacts=contacts_set, page=0)
+    archiver = Archiver.get()
+    return render_template("index.html", contacts=contacts_set, page=0, archiver=archiver)
 
 
 @app.route("/contacts/<contact_id>/email", methods=["GET"])
