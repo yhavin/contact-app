@@ -13,7 +13,8 @@
       hx-target="tbody"
       hx-push-url="true"
       hx-indicator="#spinner"
-      style="height: 2rem">
+      style="height: 2rem"
+      _="on keydown[altKey and code is 'KeyS'] from the window halt the event's default then focus me">
     <img id="spinner" class="htmx-indicator"
       src="/static/img/spinning-circles.svg"
       alt="Request in flight..."
